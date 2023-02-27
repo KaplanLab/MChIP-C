@@ -270,19 +270,19 @@ samtools index -@ 7 ChIP_H3K4me3.sorted.bam
 bamCoverage -b ChIP_H3K4me3.sorted.bam -bs 50 -e -p 7 -o ChIP_H3K4me3.bw
 
 # now I can take DHSs and look at correlations between ChIP-seq signal in MChIP-C and conv.ChIP in these sites
-# all analysis in script "correlations ChIP.R"
+# all analysis in script "correlations_ChIP.R"
 # correlations: rep0,rep3=0.96 rep0,rep4=0.96 rep0,rep5=0.96 rep0,ChIP=0.90 rep3,rep4=0.97 rep3,rep5=0.95 rep3,ChIP=0.91 rep4,rep5=0.95 rep4,ChIP=0.90 rep5,ChIP=0.89 
 
 # coreelation analysis of MChIP-C biological replicates
 # first, created coverage dataframe with deeptools:
 multiBigwigSummary bins -bs 250 -p 3 -b MChIPC_rep0.bw MChIPC_rep3.bw MChIPC_rep4.bw MChIPC_rep5.bw --outRawCounts fig.S1/replicates_coverage.txt -o results.npz
-# then re-direct data to R script "correlations MChIP-C.R" to calulate correlations and plot graphs
+# then re-direct data to R script "correlations_MChIP-C.R" to calulate correlations and plot graphs
 # corelations:
 # separate bins: rep0,rep3=0.68 rep0,rep4=0.65 rep0,rep5=0.76 rep3,rep4=0.64 rep3,rep5=0.74 rep4,rep5=0.69
 # merged data: rep0,rep3=0.84 rep0,rep4=0.83 rep0,rep5=0.85 rep3,rep4=0.91 rep3,rep5=0.93 rep4,rep5=0.90 
-# also assessing distance decay in replicates "distance distr in replicates.R"
+# also assessing distance decay in replicates "distance_distr_in_replicates.R"
 
-# now everything is ready for MChIPC loop calling (see 'MChIPC loop calling.R')
+# now everything is ready for MChIPC loop calling (see 'MChIPC_loop_calling.R')
 
 
 # PLAC-seq re-analysis
@@ -362,7 +362,7 @@ cat list_of_genes.txt | while read line; do  promoter=$(echo $line | cut -d " " 
 # introducing CTCF and DNase profiles to the analysis: ENCFF000BWF - CTCF bw signal, ENCFF002CEL - peaks; ENCFF352SET - DNase bw signal, ENCFF621ZJY - peaks. Also H3K27: ENCFF010PHG
 
 
-# selecting peaks of interest with R script 'creating site of interest files.R' 
+# selecting peaks of interest with R script 'creating_site_of_interest_files.R' 
 # ploting heatmap to show higher sensitivity of MChIPC compared to PLACseq
 computeMatrix reference-point --referencePoint center -S ../../../Nov2021_MCC/Chips/ENCFF352SET\ -\ DNase.bigWig ../../../Nov2021_MCC/Chips/ENCFF000BWF\ -\ CTCF.bigWig ../../ChIPs/ChIP_mean.bw ../../MChIPC_merged.bw ../../PLACseq_merged.bw -R CTCF_of_interest.bed DNase_of_interest.bed -p 3 -a 5000 -b 5000 -o matrix -bs 250 --missingDataAsZero 
 plotHeatmap -m matrix --colorMap OrRd -o heatmap.pdf --zMax 1 100 10 50 25 --yMax 1 100 10 50 25 --yMin 0
@@ -386,17 +386,17 @@ chr16	214895	215045	2558
 # 4) finally BRD4 dataset was downloaded from GEO (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2635249), here converted Wig to bigWig
 
 # CTCF analysis
-# everything is in "CTCF analysis.R" script
+# everything is in "CTCF_analysis.R" script
 
 # feature enrichment
-# "feature enrichment.R" + Homer (see the command in the R script)
+# "feature_enrichment.R" + Homer (see the command in the R script)
 
 # hierarcical clustering
 # "clustering.R"
 
 # random forest models
-# "model building.R" + Homer and deeptools (see the commands in the R script)
+# "model_building.R" + Homer and deeptools (see the commands in the R script)
 
 # analysis of loops in verified E-P pairs
-# "comparison with verified E-P.R"
+# "comparison_with_verified_E-P.R"
 
